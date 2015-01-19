@@ -1,0 +1,11 @@
+I'm going to try this out and you can decide if it works for you or not.
+
+Here is the url where I've uploaded my website:
+http://youravgjoe.com/Assignment%2001/index.html
+
+And here is the github repository where all of my code is:
+https://github.com/youravgjoe/CS-2550-Project
+
+Again, let me know if this works, or if you would rather I just upload the files directly to canvas.
+
+-Joe
