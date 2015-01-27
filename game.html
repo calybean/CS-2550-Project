@@ -18,7 +18,26 @@ td {
   background:black;
   color:white;
 }
+img {
+  draggable:true;
+}
 </style>
+
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("Text", ev.target.id);
+}
+
+function drop(ev) {
+  var data = ev.dataTransfer.getData("Text");
+  ev.target.appendChild(document.getElementById(data));
+  ev.preventDefault();
+}
+</script>
 
 <!--<form method="POST" action="http://requestb.in/1ie3eg91">-->
 <div align="center"><font size="4">
