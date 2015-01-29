@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <h1 align="center"><font>Joey Cannon's Game of Checkers (HTML Version)</font></h1>
+</head>
+<body style="background:lightblue">
+  <style>
+    td {
+      width:80px;
+      height:80px;
+    }
+
+    .red {
+      background:red;
+    }
+    .black {
+      background:black;
+    }
+    font {
+      font-family:calibri;
+    }
+    img {
+      draggable:true;
+    }
+  </style>
+
+  <form method="POST" action="http://requestb.in/1ie3eg91">
+  <div align="center"><font size="4">
+    <label name="player1">Player 1 (red): </label>
+    <input type="text" name="player1">
+    <label name="player2">Player 2 (black): </label>
+    <input type="text" name="player2">
+    <input type="submit" value="Start Game!"><br/><br/></font>
+  </div>
+
+  <div id="player1" align="center"><font size="6">
+    Player 1: Steven
+  </div></font>
+
+  <table class="black" align="center" border="4">
+    <tr align="center">
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+    </tr>
+    <tr align="center">
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+    </tr>
+    <tr align="center">
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="red_plain.png"></td>
+      <td class="red"></td>
+    </tr>
+    <tr align="center">
+      <td class="red"></td>
+      <td class="black"></td>
+      <td class="red"></td>
+      <td class="black"></td>
+      <td class="red"></td>
+      <td class="black"></td>
+      <td class="red"></td>
+      <td class="black"></td>
+    </tr>
+    <tr align="center">
+      <td class="black"></td>
+      <td class="red"></td>
+      <td class="black"></td>
+      <td class="red"></td>
+      <td class="black"></td>
+      <td class="red"></td>
+      <td class="black"></td>
+      <td class="red"></td>
+    </tr>
+    <tr align="center">
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+    </tr>
+    <tr align="center">
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+    </tr>
+    <tr align="center">
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+      <td class="red"></td>
+      <td class="black"><img src="black_plain.png"></td>
+    </tr>
+  </table>
+
+  <div id="player2" align="center"><font size="6">
+    Player 2: Jill
+  </font></div>
+</form>
+
+<script>
+  var player1 = document.getElementById('player1');
+  var player2 = document.getElementById('player2');
+  player1 = "Player 1: Steven";
+  player2 = "Player 2: Chandler";
+</script>
+
+</body>
+</html>
