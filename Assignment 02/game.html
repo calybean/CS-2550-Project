@@ -14,9 +14,20 @@
   <form>
     <div align="center"><font size="4">
       <label name="player1">Player 1 (red): </label>
-      <input type="text" id="player1Input" name="player1">
+      <input type="text" id="player1Input" name="player1" size="14">
       <label name="player2">Player 2 (black): </label>
-      <input type="text" id="player2Input" name="player2">
+      <input type="text" id="player2Input" name="player2" size="14">
+    </div>
+    <div>
+      <label for="numRows">Enter number of rows: </label>
+      <input type="text" id="numRows" size="4">
+      <label for="numColumns">Enter number of columns: </label>
+      <input type="text" id="numColumns" size="4">
+    </div>
+    <div id="min">
+      (Minimum number of rows and columns is 8)
+    </div>
+    <div>
       <input type="submit" id="startGame" value="Start Game!"><br/><br/></font>
     </div>
   </form>

@@ -13,18 +13,29 @@ function generate_table() {
 function button_click() {
   var player1 = document.getElementById('player1Input');
   var player2 = document.getElementById('player2Input');
-  document.getElementById('player1Name').innerHTML = '<font size="6">Player 1: ' + player1.value + '</font>';
-  document.getElementById('player2Name').innerHTML = '<font size="6">Player 2: ' + player2.value + '</font>';
-  player1.value = "";
-  player2.value = "";
-  player1.focus();
 
-  // Change number of rows and columns here:
-  var rows = 8;
-  var columns = 8;
+  var rows = document.getElementById('numRows').value;
+  var columns = document.getElementById('numColumns').value;
+  if (rows < 8 || columns < 8) {
+    document.getElementById('min').innerHTML = '<font color="red">(Minimum number of rows and columns is 8)</font>'
+    document.getElementById('numRows').value = "";
+    document.getElementById('numColumns').value = "";
+    document.getElementById('numRows').focus();
+  } else {
+    document.getElementById('numRows').value = "";
+    document.getElementById('numColumns').value = "";
+    player1.value = "";
+    player2.value = "";
+    player1.focus();
+    document.getElementById('min').innerHTML = '(Minimum number of rows and columns is 8)'
 
-  //generate the table
-  generate_dynamic_table(rows, columns);
+    document.getElementById('player1Name').innerHTML = '<font size="6">Player 1: ' + player1.value + '</font>';
+    document.getElementById('player2Name').innerHTML = '<font size="6">Player 2: ' + player2.value + '</font>';
+
+    //generate the table
+    generate_dynamic_table(rows, columns);
+  }
+
   return false;
 }
 
