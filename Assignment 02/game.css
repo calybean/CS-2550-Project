@@ -1,9 +1,12 @@
 body {
   background:lightblue;
   font-family:calibri;
-  font-size:5;
+  font-size:150%;
+  padding-left:75px;
+  padding-right:75px;
 }
 td {
+  align:center;
   width:80px;
   height:80px;
 }
@@ -18,4 +21,10 @@ h1 {
 }
 img {
   draggable:true;
+}
+#software_design {
+  text-align:left;
+}
+div {
+  text-align: center;
 }
