@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkers</title>
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link id="css" rel="stylesheet" type="text/css" href="classic.css" media="screen" />
+  <script src="game.js"></script>
+</head>
+
+<body>
+  <!-- Here's the info at the top of the page -->
+  <div>
+    <h1><font><u>Joey Cannon's Game of Checkers</u></font></h1>
+    <font><h3>CS 2550 - Professor Wright</h3></font>
+  </div>
+  <div id="css_buttons">
+    Change the style of the board here:
+    <form action="">
+      <input type="radio" name="style" id="classic" onclick="classic_css()" checked="true">Classic</input>
+      <input type="radio" name="style" id="old_school" onclick="old_school_css()">Old School</input>
+      <input type="radio" name="style" id="UVU" onclick="uvu_css()">UVU</input>
+    </form>
+    <div>
+      (I know that some of the checkers are still pretty ugly and hard to see. I'll fix it. I promise.)
+    </div>
+  </div>
+  <div style="margin-top:25px">
+    <font><u>Game Instructions:</u></font>
+  </div>
+  <div>
+    Click your checker, then click the space you want to move it to.
+  </div>
+  <div>
+    I haven't factored in turn taking just yet, so be nice and take turns. :)
+  </div>
+  <div>
+    Also, word to the wise: Don't refresh the page. You'll lose your game progress.
+  </div>
+
+  <div id="table">
+
+  </div>
+
+  <div id="gameInfo">
+
+  </div>
+  <div id="playerInfo">
+
+  </div>
+</body>
+</html>
