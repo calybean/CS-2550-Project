@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkers</title>
+  <link rel="stylesheet" type="text/css" href="game.css" media="screen" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <h1 align="center">Joey Cannon's Game Description Page</h1>
+</head>
+<body style="background:lightblue">
+  <div>
+    <img src="checkers.png" width="20%">
+  </div>
+  <div>
+    (Image courtesy of vintagetoys.com)
+  </div>
+  <div>
+    <h3>This is the description page for Joey's html checkers game.</h3>
+  </div>
+  <div>
+    <h3>GamePlay:</h3>
+  </div>
+  <div>
+    This is a two player game. Choose your colors and enter your names on the next page.
+    This game is played by clicking first on the checker that you wish to move, and then
+    clicking on the space you wish to move it to. Only single jumps are allowed. Your
+    pieces may only move forward until they have reached the other side of the board,
+    where they become kings and can then move forward or backward.
+  </div>
+  <div>
+    <br/>Here is a <a target="_new" href="http://en.wikipedia.org/wiki/Draughts">link</a> to the Wikepedia
+    page for Checkers (also called "Draughts").
+  </div>
+  <div style="font-size:150%">
+    <a target="_new" href="game.html">Click here to go to the game!</a>
+  </div>
+  <hr size="5px">
+  <div id="software_design">
+    <h3><u>Preliminary software design:</u></h3>
+  </div>
+  <div id="software_design">
+    <b><u>Variables:</u></b> <br/>
+    Player 1 Name <br/>
+    Player 2 Name <br/>
+    Starting number of checkers (both) = 12 (const) <br/>
+    Current number of checkers (red and black) <br/>
+    Current number of kings (red and black) <br/>
+    Position (maybe have x and y position, or just give each valid square a name)
+  </div>
+  <div id="software_design">
+    <b><u>Functions:</u></b><br/>
+    Move Function - Detect click and drag, or just allow user to click on a checker, and then click on a space to move it to.<br/>
+    Jump Function - May use part of the move function to validate the movement, but will also get rid of the oponent's checker.<br/>
+    Win Function - Display a win text when one player's checker count reaches zero.
+  </div>
+  <hr size="5px">
+</body>
+</html>

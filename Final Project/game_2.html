@@ -4,12 +4,11 @@
   <meta charset="UTF-8">
   <title>Checkers</title>
   <link rel="shortcut icon" href="favicon.ico" />
-  <link id="css" rel="stylesheet" type="text/css" href="classic.css" media="screen" />
+  <link id="css" rel="stylesheet" type="text/css" href="css/classic.css" media="screen" />
   <script src="game.js"></script>
 </head>
 
 <body>
-  <!-- Here's the info at the top of the page -->
   <div>
     <h1><font><u>Joey Cannon's Game of Checkers</u></font></h1>
     <font><h3>CS 2550 - Professor Wright</h3></font>
@@ -33,23 +32,48 @@
       </font>
     </form>
   </div>
+  <div>
+    <form>
+      <label>Player 1 (red): </label>
+      <input id="player1Input"></input>
+      <label>Player 2 (black): </label>
+      <input id="player2Input"></input>
+      <input type="button" id="startButton"></input>
+    </form>
+  </div>
   <div style="margin-top:25px">
     <font><u>Game Instructions:</u></font>
   </div>
   <div>
     Click your checker, then click the space you want to move it to.
   </div>
+  <!--
   <div>
-    I haven't factored in turn taking just yet, so be nice and take turns. :)
+    <input type="button" id="newGame" value="New Game?"></input>
   </div>
-  <div>
-    Also, word to the wise: Don't refresh the page. You'll lose your game progress.
+-->
+
+  <br>
+
+  <div id="player1" class="playerName">
+
   </div>
 
   <div id="table">
 
   </div>
 
+  <br>
+
+  <div id="player2" class="playerName">
+
+  </div>
+
+  <br>
+
+  <div>
+    Data loaded from new_game.xml:
+  </div>
   <div id="gameInfo">
 
   </div>

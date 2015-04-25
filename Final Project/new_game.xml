@@ -1,0 +1,6 @@
+<root>
+  <new_game id="new_game" game_string="1919191991919191191919199090909009090909929292922929292992929292">
+    <player id="red" plain_checkers="12" star_checkers="0"></player>
+    <player id="black" plain_checkers="12" star_checkers="0"></player>
+  </new_game>
+</root>

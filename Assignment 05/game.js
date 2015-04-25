@@ -8,7 +8,6 @@
 function page_init() {
   generate_board();
   cell_click();
-  read_xml_file();
 }
 
 if (document && document.getElementById) {
@@ -89,9 +88,6 @@ function update_board() {
     document.getElementById('table').innerHTML = '<img src="i_win_2.gif"/>'
     gameEnded = true;
   }
-  //-------------------------------------------why doesn't this work?-------------------------------------------------------
-  write_xml_file();
-  read_xml_file();
 }
 
 function display_game_info(game_info, red_info, black_info) {
@@ -132,10 +128,10 @@ function uvu_css(){
 //1 is a red checker, 2 is a black checker, 0 is an empty black space, 9 is a red space. 3 will be a red star, and 4 a black star.
 
 //this is a new game
-//var gameString = '1919191991919191191919199090909009090909929292922929292992929292';
+var gameString = '1919191991919191191919199090909009090909929292922929292992929292';
 
-//this is the saved_game from the xml file
-var gameString = '0909094990949090090909099392909009090909909090910929090992939290'
+//this is the saved_game from the json file
+//var gameString = '0909094990949090090909099392909009090909909090910929090992939290'
 
 //this on has one of each type of checker
 //var gameString = '0909090990939090090909099091909009092909909090900909490990909090';
@@ -399,51 +395,7 @@ function validate_move(currentCell, previousCell) {
   }
 }
 
-function read_xml_file() {
-  var request = new XMLHttpRequest();
-  request.open("GET", "saved_game.xml", false);
-  request.send(null);
-  var xmlDoc = request.responseXML;
-
-  var xmlElement = xmlDoc.getElementById('saved_game');
-  var playerElements = xmlDoc.getElementsByTagName('player');
-  var red_plain = playerElements[0].getAttribute('plain_checkers');
-  var red_star = playerElements[0].getAttribute('star_checkers');
-  var black_plain = playerElements[1].getAttribute('plain_checkers');
-  var black_star = playerElements[1].getAttribute('star_checkers');
-
-  var red_info = "Red: Plain checkers: " + red_plain + ". Star checkers: " + red_star + ".";
-  var black_info = "Black: Plain checkers: " + black_plain + ". Star checkers: " + black_star + ".";
-  var game_info = xmlElement.getAttribute('game_string');
-
-  display_game_info(game_info, red_info, black_info);
-}
-
-function write_xml_file() {
-  // var request = new XMLHttpRequest();
-  // request.open("POST", "saved_game.xml", false);
-  // request.send(null);
-  // var xmlDoc = request.responseXML;
-  var xmlDoc = loadXMLDoc("saved_game.xml");
-  xmlElement = xmlDoc.getElementById("saved_game");
-  xmlElement.setAttribute("game_string", gameString);
-}
-
 function convertFromBaseToBase(str, fromBase, toBase) {
   var num = parseInt(str, fromBase);
   return num.toString(toBase);
-}
-
-function loadXMLDoc(filename) {
-  if (window.XMLHttpRequest)
-    {
-      xhttp = new XMLHttpRequest();
-    }
-  else // code for IE5 and IE6
-    {
-      xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-  xhttp.open("GET",filename,false);
-  xhttp.send();
-  return xhttp.responseXML;
 }

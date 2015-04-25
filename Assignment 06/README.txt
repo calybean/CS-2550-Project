@@ -1,5 +1,7 @@
 website url: http://youravgjoe.com/Assignment%2006/index.html
 
+github repo: https://github.com/youravgjoe/CS-2550-Project/tree/master/Assignment%2006
+
 Joseph Cannon
 4/6/15
 CS 2550

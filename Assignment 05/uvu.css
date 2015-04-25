@@ -1,0 +1,45 @@
+body {
+  background:lightblue;
+  font-family:calibri;
+  font-size:110%;
+  font-weight:bold;
+  padding-left:75px;
+  padding-right:75px;
+}
+#table {
+  margin-top:25px;
+}
+td {
+  align:center;
+  width:80px;
+  height:80px;
+  border:2px solid black;
+}
+h1 {
+  text-align:center;
+}
+.red {
+  background:yellow;
+}
+.black {
+  background:green;
+}
+img {
+  draggable:true;
+}
+#software_design {
+  text-align:left;
+}
+div {
+  text-align: center;
+}
+input {
+  margin:10px;
+}
+#win_gif {
+  position: absolute;
+  top: 80%;
+  left:50%;
+  margin-left: -260px;
+  display: none;
+}

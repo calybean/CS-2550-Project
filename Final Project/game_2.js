@@ -1,14 +1,24 @@
 //Joseph Cannon
-//4/5/15
+//4/16/15
 //CS 2550
 //Prof. Wright
 
+//------------------------------------------------------------------------------------------
 //-------------------------------------------VIEW-------------------------------------------
+//------------------------------------------------------------------------------------------
 
 function page_init() {
   generate_board();
   cell_click();
   read_xml_file();
+//  document.getElementById("startButton").onclick = start_game;
+  document.getElementById("startButton").onclick = new_game;
+//  document.getElementById("newGame").onclick = new_game;
+  document.getElementById("player1Input").focus();
+  document.getElementById("player2Input").onkeypress = enter_press(event);
+  //Instead of having two buttons, I need to use the gameInProgress (gameStarted?) bool to change the
+  //value of the button so that it always starts a new game, and adds the player names in at the same
+  //time, so you don't have to click two buttons to start a new game.
 }
 
 if (document && document.getElementById) {
@@ -20,11 +30,44 @@ var black_image = '"checkers/black_plain.png"';
 var red_star_image = '"checkers/red_star.png"';
 var black_star_image = '"checkers/black_star.png"'
 
+function display_player_names(player1, player2) {
+  var player1Div = document.getElementById("player1");
+  var player2Div = document.getElementById("player2");
+
+  player1Div.innerHTML = "Player 1: " + player1;
+  player2Div.innerHTML = "Player 2: " + player2;
+
+  document.getElementById("player1Input").value = "";
+  document.getElementById("player2Input").value = "";
+}
+
 function generate_board() {
   var table = document.getElementById('table');
   var tableString = "";
   var endRed = 3;
   var startBlack = size - 3;
+
+  if(gameStarted == false) {
+    document.getElementById("startButton").value = "Start Game!";
+    console.log('game started');
+  } else {
+    document.getElementById("startButton").value = "New Game?";
+    console.log('new game started');
+  }
+
+  if(gameEnded == false) {
+    load_game();
+  } else {
+    gameEnded = false;
+    console.log('gameEnded = false');
+  }
+
+
+  console.log('gameStarted: ' + gameStarted);
+
+  //why is this here???
+  gameStarted = true;
+//  gameEnded = false;
 
   //start table
   tableString += '<table class="black" align="center" border="4">';
@@ -45,6 +88,8 @@ function generate_board() {
         tableString += '<td class="black" id="' + i.toString().concat(j.toString()) + '"><img src=' + red_star_image + '></td>';
       } else if (gameString[gameIndex] == 4){
         tableString += '<td class="black" id="' + i.toString().concat(j.toString()) + '"><img src=' + black_star_image + '></td>';
+      } else {
+        console.log("table cell generation error");
       }
     }
     tableString += '</tr>';
@@ -52,6 +97,25 @@ function generate_board() {
   // end table:
   tableString += '</table>';
   table.innerHTML = tableString;
+
+  if(css === "classic") {
+//    console.log("classic if");
+    document.getElementById("classic").checked = true;
+    classic_css();
+  }
+  if(css === "old school") {
+//    console.log("old school if");
+    document.getElementById("old_school").checked = true;
+    old_school_css();
+  }
+  if(css === "uvu") {
+//    console.log("uvu if");
+    document.getElementById("UVU").checked = true;
+    uvu_css();
+  }
+
+  //this reads in model info for a new game and displays it on the page.
+  read_xml_file();
 }
 
 function update_board() {
@@ -61,17 +125,21 @@ function update_board() {
       var cellId = i.toString().concat(j.toString());
       if (gameString[gameIndex] == 9 || gameString[gameIndex] == 0) {
         document.getElementById(cellId).innerHTML = '';
-      } else if (gameString[gameIndex] == 1) {
+      } if (gameString[gameIndex] == 1) {
         document.getElementById(cellId).innerHTML = '<img src=' + red_image + '>';
-      } else if (gameString[gameIndex] == 2){
+      }  if (gameString[gameIndex] == 2){
         document.getElementById(cellId).innerHTML = '<img src=' + black_image + '>';
-      } else if (gameString[gameIndex] == 3) {
+      }  if (gameString[gameIndex] == 3) {
         document.getElementById(cellId).innerHTML = '<img src=' + red_star_image + '>';
-      } else if (gameString[gameIndex] == 4){
+      }  if (gameString[gameIndex] == 4){
         document.getElementById(cellId).innerHTML = '<img src=' + black_star_image + '>';
       }
     }
   }
+
+  console.log('piece moved');
+  console.log(gameEnded);
+  //win code:
   var redCount = 0;
   var blackCount = 0;
   for(var i = 0; i < numCells; ++i) {
@@ -81,17 +149,41 @@ function update_board() {
       blackCount++;
     }
   }
-  if(redCount == 0 && gameEnded == false) {
-    document.getElementById('table').innerHTML = '<img src="i_win.gif"/>'
-    gameEnded = true;
+  var color1 = "Red";
+  var color2 = "Black";
+  if(css == "classic" ) {
+    color1 = "Red";
+    color2 = "Black";
+  } else if(css == "old school") {
+    color1 = "White";
+    color2 = "Brown";
+  } else {
+    color1 = "Yellow";
+    color2 = "Green";
   }
-  if (blackCount == 0 && gameEnded == false) {
-    document.getElementById('table').innerHTML = '<img src="i_win_2.gif"/>'
+
+  console.log("gameEnded: " + gameEnded);
+  console.log(blackCount);
+
+  //color1 (red/white/yellow) wins
+  if(blackCount == 0 && gameEnded == false) {
+    console.log('red wins');
+    document.getElementById('table').innerHTML = '<video width="480" height="360" autoplay><source src="videos/i_win.mp4" type="video/mp4">Your browser does not support this video tag.</video>';
+    document.getElementById('player1').innerHTML = '<h1>' + color1 + ' wins!<h1>';
+    document.getElementById('player2').innerHTML = '';
     gameEnded = true;
+    gameStarted = false;
   }
-  //-------------------------------------------why doesn't this work?-------------------------------------------------------
-  write_xml_file();
-  read_xml_file();
+  //color2 (black/brown/green) wins
+  if (redCount == 0 && gameEnded == false) {
+    console.log('black wins');
+    document.getElementById('table').innerHTML = '<video width="480" height="360" autoplay><source src="videos/i_win.mp4" type="video/mp4">Your browser does not support this video tag.</video>';
+    document.getElementById('player1').innerHTML = '<h1>' + color2 + ' wins!</h1>';
+    document.getElementById('player2').innerHTML = '';
+    gameEnded = true;
+    gameStarted = false;
+  }
+  save_game();
 }
 
 function display_game_info(game_info, red_info, black_info) {
@@ -102,55 +194,143 @@ function display_game_info(game_info, red_info, black_info) {
   playerInfoDiv.innerHTML = red_info + ' ' + black_info;
 }
 
-//css swapping code:
+//I should make a page_style css, and then only swap the actual board css,
+//so that when I need to change a style on the page itself, I don't have to
+//change it in all 3 css files.
+
+//css swapping code (triggered with radio button onclicks):
+var css = "classic";
+var styleChanged = false;
 function classic_css(){
-	document.getElementById('css').setAttribute('href', 'classic.css');
+	document.getElementById('css').setAttribute('href', 'css/classic.css');
+  css = "classic";
+  styleChanged
   red_image = '"checkers/red_plain.png"';
   red_star_image = '"checkers/red_star.png"';
   black_image = '"checkers/black_plain.png"';
   black_star_image = '"checkers/black_star.png"';
-  update_board();
+  if(gameStarted == true) {
+    update_board();
+  } else {
+    generate_board();
+  }
 }
 function old_school_css(){
-	document.getElementById('css').setAttribute('href', 'old_school.css');
+	document.getElementById('css').setAttribute('href', 'css/old_school.css');
+  css = "old school";
   red_image = '"checkers/white_plain.png"';
   red_star_image = '"checkers/white_star.png"';
   black_image = '"checkers/brown_plain.png"';
   black_star_image = '"checkers/brown_star.png"';
-  update_board();
-}
+  if(gameStarted == true) {
+    update_board();
+  } else {
+    generate_board();
+  }}
 function uvu_css(){
-	document.getElementById('css').setAttribute('href', 'uvu.css');
+	document.getElementById('css').setAttribute('href', 'css/uvu.css');
+  css = "uvu";
   red_image = '"checkers/yellow_plain.png"';
   red_star_image = '"checkers/yellow_star.png"';
   black_image = '"checkers/green_plain.png"';
   black_star_image = '"checkers/green_star.png"';
-  update_board();
-}
+  if(gameStarted == true) {
+    update_board();
+  } else {
+    generate_board();
+  }}
 
-//-------------------------------------------MODEL-------------------------------------------
+//------------------------------------------------------------------------------------------
+//------------------------------------------MODEL-------------------------------------------
+//------------------------------------------------------------------------------------------
+
 //1 is a red checker, 2 is a black checker, 0 is an empty black space, 9 is a red space. 3 will be a red star, and 4 a black star.
+
+//var newGame = '1919191991919191191919199090909009090909929292922929292992929292';
+
+//one of each type of checker
+var newGame = '0909090990939090090909099091909009092909909090900909490990909090';
 
 //this is a new game
 //var gameString = '1919191991919191191919199090909009090909929292922929292992929292';
 
 //this is the saved_game from the xml file
-var gameString = '0909094990949090090909099392909009090909909090910929090992939290'
+//var gameString = '0909094990949090090909099392909009090909909090910929090992939290';
 
-//this on has one of each type of checker
-//var gameString = '0909090990939090090909099091909009092909909090900909490990909090';
+//this one has one of each type of checker
+var gameString = '0909090990939090090909099091909009092909909090900909490990909090';
 
 var size = 8;
 var player1Checkers = 12;
 var player2Checkers = 12;
 var numCells = 64;
 var gameEnded = false;
+var gameStarted = false;
+
 
 function replaceAt(wholeString, index, char) {
   return wholeString.substr(0, index) + char + wholeString.substr(index + 1);
 }
 
-//-------------------------------------------CONTROLLER-------------------------------------------
+//------------------------------------------------------------------------------------------
+//----------------------------------------CONTROLLER----------------------------------------
+//------------------------------------------------------------------------------------------
+
+var player1Name = "";
+var player2Name = "";
+
+function start_game() {
+  // var player1Input = document.getElementById("player1Input");
+  // var player2Input = document.getElementById("player2Input");
+  // player1Name = player1Input.value;
+  // player2Name = player2Input.value;
+  // gameStarted = true;
+  //
+  // display_player_names(player1Name, player2Name);
+}
+
+function new_game() {
+  gameString = newGame;
+  player1Name = "";
+  player2Name = "";
+  save_game();
+//  generate_board();
+
+  var player1Input = document.getElementById("player1Input");
+  var player2Input = document.getElementById("player2Input");
+  player1Name = player1Input.value;
+  player2Name = player2Input.value;
+  gameStarted = true;
+  gameEnded = false;
+
+  display_player_names(player1Name, player2Name);
+
+  document.getElementById('startButton').value = "New Game?";
+
+  load_game();
+  location.reload();
+  generate_board();
+  update_board();
+}
+
+function enter_press(e) {
+  //the purpose of this function is to allow the enter key to
+  //point to the correct button to click.
+  var ev = e || window.event;
+  var key = ev.keyCode;
+
+  if (key == 13)
+  {
+     //Get the button the user wants to have clicked
+     var btn = document.getElementById(buttonName);
+     if (btn != null)
+     {
+        //If we find the button click it
+        btn.click();
+        ev.preventDefault();
+     }
+  }
+}
 
 function cell_click() {
   var cells = document.getElementsByTagName("td");
@@ -159,7 +339,6 @@ function cell_click() {
   for(var i = 0; i < numCells; ++i) {
     cells[i].onclick = function() {
       //change HTML of cell here.
-      console.log('in cell ' + this.id);
       //reset last selected cell to black border
       document.getElementById(selectedCell).style.border = "2px solid black";
       //find row and column and check for black cell. Only allow selections of black cells.
@@ -176,12 +355,12 @@ function cell_click() {
   }
 }
 
-//also remember to factor in turns. If red just moved, then only black can move. (would this be if red was current AND previous?)
 
 function validate_move(currentCell, previousCell) {
 
   //sorry for the magic numbers, I'll fix them soon...
-  //I also know that I should factor out these if/if else statements into another function. I just haven't had the time.
+  //I also know that I should refactor all these if/if else statements
+  //into another function. I just haven't had the time.
 
   //these are base 10
   var current = convertFromBaseToBase(currentCell, 8, 10);
@@ -399,51 +578,55 @@ function validate_move(currentCell, previousCell) {
   }
 }
 
+function save_game() {
+  var save = {
+    player1Name: this.player1Name,
+    player2Name: this.player2Name,
+    css: this.css,
+    gameString: this.gameString,
+    gameStarted: this.gameStarted,
+    gameEnded: this.gameEnded
+  };
+  window.localStorage.setItem('savedGame', JSON.stringify(save));
+}
+
+function load_game() {
+  var json = window.localStorage.getItem('savedGame');
+
+  if(json) {
+    var save = JSON.parse(json);
+
+    this.player1Name = save.player1Name;
+    this.player2Name = save.player2Name;
+    this.css = save.css;
+    this.gameString = save.gameString;
+    this.gameStarted = save.gameStarted;
+    this.gameEnded = save.gameEnded;
+    display_player_names(player1Name, player2Name);
+  }
+}
+
 function read_xml_file() {
   var request = new XMLHttpRequest();
-  request.open("GET", "saved_game.xml", false);
+  request.open("GET", "new_game.xml", false);
   request.send(null);
   var xmlDoc = request.responseXML;
 
-  var xmlElement = xmlDoc.getElementById('saved_game');
+  var xmlElement = xmlDoc.getElementById('new_game');
   var playerElements = xmlDoc.getElementsByTagName('player');
   var red_plain = playerElements[0].getAttribute('plain_checkers');
   var red_star = playerElements[0].getAttribute('star_checkers');
   var black_plain = playerElements[1].getAttribute('plain_checkers');
   var black_star = playerElements[1].getAttribute('star_checkers');
 
-  var red_info = "Red: Plain checkers: " + red_plain + ". Star checkers: " + red_star + ".";
-  var black_info = "Black: Plain checkers: " + black_plain + ". Star checkers: " + black_star + ".";
+  var red_info = "<u>Red:</u> Plain checkers: " + red_plain + ". Star checkers: " + red_star + ".";
+  var black_info = "<u>Black:</u> Plain checkers: " + black_plain + ". Star checkers: " + black_star + ".";
   var game_info = xmlElement.getAttribute('game_string');
 
   display_game_info(game_info, red_info, black_info);
 }
 
-function write_xml_file() {
-  // var request = new XMLHttpRequest();
-  // request.open("POST", "saved_game.xml", false);
-  // request.send(null);
-  // var xmlDoc = request.responseXML;
-  var xmlDoc = loadXMLDoc("saved_game.xml");
-  xmlElement = xmlDoc.getElementById("saved_game");
-  xmlElement.setAttribute("game_string", gameString);
-}
-
 function convertFromBaseToBase(str, fromBase, toBase) {
   var num = parseInt(str, fromBase);
   return num.toString(toBase);
-}
-
-function loadXMLDoc(filename) {
-  if (window.XMLHttpRequest)
-    {
-      xhttp = new XMLHttpRequest();
-    }
-  else // code for IE5 and IE6
-    {
-      xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-  xhttp.open("GET",filename,false);
-  xhttp.send();
-  return xhttp.responseXML;
 }
